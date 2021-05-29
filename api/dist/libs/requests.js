@@ -18,9 +18,9 @@ var Requests = /** @class */ (function () {
             return response.data;
         }).catch(function (err) {
             if (err.response) {
-                throw new error_1.default(err.response.data, err.response.status);
+                throw new error_1.default(err.response.data, err.response.status, err);
             }
-            throw new error_1.default('Error in the request', -2);
+            throw new error_1.default('Error in the request', -2, err);
         });
     };
     Requests.post = function (endpoint, body, headers) {
@@ -30,9 +30,9 @@ var Requests = /** @class */ (function () {
             return response.data;
         }).catch(function (err) {
             if (err.response) {
-                throw new error_1.default(err.response.data, err.response.status);
+                throw new error_1.default(err.response.data, err.response.status, err);
             }
-            throw new error_1.default('Error in the request', -2);
+            throw new error_1.default('Error in the request', -2, err);
         });
     };
     Requests.getApiHost = function () { return Requests.apiHost; };

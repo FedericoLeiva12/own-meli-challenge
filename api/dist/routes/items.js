@@ -11,15 +11,29 @@ itemsRoute.use(express_1.urlencoded({ extended: true }));
 itemsRoute.get('/', function (req, res) {
     var query = req.query.query;
     if (!query || typeof query !== 'string') {
-        return res.send({ result: [] });
+        return res.send({
+            author: utils_1.APP_AUTHOR,
+            categories: [],
+            items: []
+        });
     }
     meli_1.default.getProductByQuery(query)
         .then(function (result) {
+        var products = result.results;
         return {
             author: utils_1.APP_AUTHOR,
-            categories: result.filters.find(function (filter) { return filter.id === 'category'; })
+            categories: result.filters.find(function (filter) { return filter.id === 'category'; }),
+            items: products.map(function (product) { return ({
+                id: product.id,
+                title: product.title,
+                price: {
+                    currency: product.prices
+                }
+            }); })
         };
-        res.send({ result: result });
+    })
+        .then(function (result) {
+        res.send(result);
     })
         .catch(function (err) {
         res.status(err.code > 0 ? err.code : 500);
