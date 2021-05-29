@@ -1,2 +1,4 @@
+api/dist/
+api/coverage/
 api/node_modules
 api/.env
